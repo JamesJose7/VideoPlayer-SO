@@ -10,6 +10,7 @@
         android:id="@+id/video_player"
         android:layout_height="0dp"
         android:layout_width="0dp"
+        app:controller_layout_id="@layout/video_player_controls_layout"
         app:layout_constraintDimensionRatio="16:9"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
