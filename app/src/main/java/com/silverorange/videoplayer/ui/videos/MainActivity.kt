@@ -43,6 +43,17 @@ class MainActivity : AppCompatActivity() {
         loadCurrentVideoContent()
     }
 
+    override fun onPause() {
+        super.onPause()
+        pauseVideo()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        player?.release()
+        player = null
+    }
+
     private fun bindPlayerButtons() = with(binding.videoPlayer) {
         playButton = findViewById(R.id.play)
         pauseButton = findViewById(R.id.pause)
