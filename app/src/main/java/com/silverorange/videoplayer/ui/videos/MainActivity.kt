@@ -14,6 +14,7 @@ import com.silverorange.videoplayer.data.api.VideosApi
 import com.silverorange.videoplayer.data.repositories.VideosRepository
 import com.silverorange.videoplayer.databinding.ActivityMainBinding
 import com.silverorange.videoplayer.ui.videos.model.VideosViewModel
+import com.silverorange.videoplayer.utils.setEnabledStatus
 
 class MainActivity : AppCompatActivity() {
 
@@ -119,7 +120,7 @@ class MainActivity : AppCompatActivity() {
     private fun updateNextAndPreviousButtonStates() {
         val isPlaylistAtBeginning = player?.hasPreviousMediaItem() == false
         val isPlaylistAtEnd = player?.hasNextMediaItem() == false
-        previousButton.isEnabled = !isPlaylistAtBeginning
-        nextButton.isEnabled = !isPlaylistAtEnd
+        previousButton.setEnabledStatus(!isPlaylistAtBeginning)
+        nextButton.setEnabledStatus(!isPlaylistAtEnd)
     }
 }
