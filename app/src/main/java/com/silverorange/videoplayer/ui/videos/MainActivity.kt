@@ -2,7 +2,7 @@ package com.silverorange.videoplayer.ui.videos
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.silverorange.videoplayer.R
+import android.util.Log
 import com.silverorange.videoplayer.data.api.RetrofitClient
 import com.silverorange.videoplayer.data.api.VideosApi
 import com.silverorange.videoplayer.data.repositories.VideosRepository
@@ -21,5 +21,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         viewModel.getVideos()
+        viewModel.currentVideo.observe(this) {
+            it?.let { video ->
+                Log.d(MainActivity::class.java.simpleName, "Current video: ${video.title}")
+            }
+        }
     }
 }
