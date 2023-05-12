@@ -1,7 +1,6 @@
 package com.silverorange.videoplayer.ui.videos
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
@@ -40,13 +39,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
         bindPlayerButtons()
 
-        viewModel.currentVideo.observe(this) {
-            it?.let { video ->
-                Log.d(MainActivity::class.java.simpleName, "Current video: ${video.title}")
-            }
-        }
-
         loadVideosIntoPlayer()
+        loadCurrentVideoContent()
     }
 
     private fun bindPlayerButtons() = with(binding.videoPlayer) {
@@ -122,5 +116,15 @@ class MainActivity : AppCompatActivity() {
         val isPlaylistAtEnd = player?.hasNextMediaItem() == false
         previousButton.setEnabledStatus(!isPlaylistAtBeginning)
         nextButton.setEnabledStatus(!isPlaylistAtEnd)
+    }
+
+    private fun loadCurrentVideoContent() {
+        viewModel.currentVideo.observe(this) {
+            it?.let { currentVideo ->
+                binding.videoTitle.text = currentVideo.title
+                binding.videoAuthor.text = currentVideo.author.name
+                binding.videoDescription.text = currentVideo.description
+            }
+        }
     }
 }
