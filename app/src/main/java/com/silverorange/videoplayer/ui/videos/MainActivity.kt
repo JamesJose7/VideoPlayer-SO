@@ -1,12 +1,13 @@
 package com.silverorange.videoplayer.ui.videos
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 import com.silverorange.videoplayer.R
 import com.silverorange.videoplayer.data.api.RetrofitClient
 import com.silverorange.videoplayer.data.api.VideosApi
@@ -67,6 +68,7 @@ class MainActivity : AppCompatActivity() {
                 initializeVideoPlayer(mediaItems)
                 initializePlayerControls()
                 pauseVideo()
+                updateNextAndPreviousButtonStates()
             }
         }
     }
@@ -79,6 +81,11 @@ class MainActivity : AppCompatActivity() {
             }
 
         mediaItems.forEach { player?.addMediaItem(it) }
+        player?.addListener(object : Player.Listener {
+            override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+                updateNextAndPreviousButtonStates()
+            }
+        })
         player?.prepare()
     }
 
@@ -107,5 +114,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun previousVideo() {
         player?.seekToPreviousMediaItem()
+    }
+
+    private fun updateNextAndPreviousButtonStates() {
+        val isPlaylistAtBeginning = player?.hasPreviousMediaItem() == false
+        val isPlaylistAtEnd = player?.hasNextMediaItem() == false
+        previousButton.isEnabled = !isPlaylistAtBeginning
+        nextButton.isEnabled = !isPlaylistAtEnd
     }
 }
