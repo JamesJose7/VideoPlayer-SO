@@ -78,6 +78,7 @@ class MainActivity : AppCompatActivity() {
         mediaItems.forEach { player?.addMediaItem(it) }
         player?.addListener(object : Player.Listener {
             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+                viewModel.updateCurrentVideo(mediaItem?.mediaId)
                 updateNextAndPreviousButtonStates()
             }
         })

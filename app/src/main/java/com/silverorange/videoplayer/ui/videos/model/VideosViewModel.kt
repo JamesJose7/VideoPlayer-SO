@@ -39,4 +39,11 @@ class VideosViewModel(
             _currentVideo.value = videos.first()
         }
     }
+
+    fun updateCurrentVideo(videoId: String?) {
+        _currentVideo.value = videos.value
+            ?.first { video ->
+                video.id == videoId
+            }
+    }
 }
